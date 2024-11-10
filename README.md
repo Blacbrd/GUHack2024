@@ -1,3 +1,8 @@
+# Credit to my teammates
+@ spikey765
+@ dpavide
+
+
 # Inspiration
 Inspired by the UniCS challenge for PhotoJournalist, and also by the AI Agent Reply challenge. Therefore creating an AI PhotoJournalist
 
