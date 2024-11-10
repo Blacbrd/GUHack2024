@@ -24,7 +24,7 @@ api_key = "sk-svcacct-cNpEjHaToqE8f1_oq5mtOav-MW58kAAPPnY2lzO3W3FdX1lTM4-B88AF-D
 
 # Configure file upload
 UPLOAD_FOLDER = os.path.join(os.path.dirname(os.path.abspath(__file__)), "uploads")
-ALLOWED_EXTENSIONS = {"png", "jpg", "jpeg", "heif"}
+ALLOWED_EXTENSIONS = {"png", "jpg", "jpeg", "heif", "webp", "heic", "pdf"}
 
 style_prompts = {
     "formal": {
