@@ -27,7 +27,7 @@ How to work well as a team, we split the team up in a way where we were able to 
 # What's next for GreatUniHack - UniCS Challenge - Team YFive.
 First year team project Implement frameworks into own projects and school projects Very proud in front end and linking it with backend May join future hackathons
 
-# Built With#
+# Built With
 css3
 flask
 html5
