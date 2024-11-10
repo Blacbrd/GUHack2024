@@ -308,6 +308,7 @@ def generate_theme_css(input_scene_description):
                 "role": "system",
                 "content": """You are a CSS designer. Create a cohesive theme based on provided keywords. Focus on:
                 - Color schemes
+                - Font and background colours should compliment (no high contrast, no blending in so text is hard to read etc.)
                 - Typography choices
                 - Spacing and layout
                 - Mood-appropriate styling

@@ -10,6 +10,7 @@ const App = () => {
   const [selectedStyle, setSelectedStyle] = useState('formal');
   const [generatedArticle, setGeneratedArticle] = useState(null);
   const [image, setImage] = useState(null);
+  const [isLoading, setIsLoading] = useState(false); // Add loading state
   const webcamRef = React.useRef(null);
 
   const handleImageUpload = (event) => {
@@ -19,7 +20,6 @@ const App = () => {
       setImageUrl(imageUrl);
       setShowPrompt(false);
       setImage(file);
-      // Clear any previously generated article
       setGeneratedArticle(null);
     }
   };
@@ -29,7 +29,6 @@ const App = () => {
       await navigator.mediaDevices.getUserMedia({ video: true });
       setCameraPermission(true);
       setIsCameraActive(true);
-      // Clear any previously generated article when accessing camera
       setGeneratedArticle(null);
     } catch (error) {
       console.error("Camera access denied or not available:", error);
@@ -44,7 +43,6 @@ const App = () => {
         setImageUrl(imageSrc);
         setShowPrompt(false);
         setImage(imageSrc);
-        // Clear any previously generated article when capturing new image
         setGeneratedArticle(null);
       } else {
         console.error("Failed to capture screenshot.");
@@ -55,7 +53,6 @@ const App = () => {
   };
 
   const handleGoBack = () => {
-    // Clear everything when going back
     setImageUrl(null);
     setImage(null);
     setGeneratedArticle(null);
@@ -65,72 +62,67 @@ const App = () => {
 
   const handleStyleChange = (e) => {
     setSelectedStyle(e.target.value);
-    // Clear previous article when style is changed
     setGeneratedArticle(null);
   };
 
   const handleSubmit = async () => {
     if (image && selectedStyle) {
+      setIsLoading(true); // Start loading
+
       const formData = new FormData();
-  
-      // Check if the image is a string (base64 data URL) or a File object
+
       if (typeof image === 'string' && image.startsWith('data:image')) {
-        // Convert the base64 image to a Blob and then to a File
         const response = await fetch(image);
         const blob = await response.blob();
-  
-        // Convert Blob to File and append to FormData
         const file = new File([blob], 'captured_image.jpg', { type: 'image/jpeg' });
         formData.append('file', file);
       } else if (image instanceof File) {
-        // If the image is already a File (e.g., from upload)
         formData.append('file', image);
       } else {
         console.error('Invalid image type');
+        setIsLoading(false);
         return;
       }
-  
-      // Append the selected style to FormData
+
       formData.append('style', selectedStyle);
-  
+
       try {
         const response = await fetch('http://127.0.0.1:5000/upload', {
           method: 'POST',
           body: formData,
         });
-  
+
         if (response.ok) {
           const result = await response.json();
           setGeneratedArticle(result.article);
-  
-          // Dynamically inject the CSS
+
           if (result.theme_css) {
             const styleSheet = document.createElement("style");
             styleSheet.type = "text/css";
             styleSheet.innerText = result.theme_css;
             document.head.appendChild(styleSheet);
           }
-  
-          // Optionally, redirect to the newsified.html page with the result
+
           window.location.href = '/newsified.html?image=' + encodeURIComponent(result.image_url) + '&article=' + encodeURIComponent(result.article);
         } else {
           console.error('Failed to generate article');
         }
       } catch (error) {
         console.error('Error uploading image:', error);
+      } finally {
+        setIsLoading(false); // End loading
       }
     }
   };
 
   return (
-    <main>
+    <main className={isLoading ? 'loading' : ''}>
       <h1>Newsify your image!</h1>
       <p>Select your image to newsify</p>
 
       {!imageUrl && (
         <button onClick={() => {
           setShowPrompt(true);
-          // Clear any existing article when starting new process
           setGeneratedArticle(null);
         }}>Choose Image</button>
       )}
@@ -168,7 +160,6 @@ const App = () => {
         </div>
       )}
 
-      {/* Display the selected or captured image with style selection */}
       {imageUrl && (
         <div className="preview-container">
           <img src={imageUrl} alt="Uploaded or Captured" className="preview-image" />
@@ -195,11 +186,16 @@ const App = () => {
         </div>
       )}
 
-      {/* Display the generated article */}
       {generatedArticle && (
         <div className="article">
           <h2>Generated Article</h2>
           <p>{generatedArticle}</p>
+        </div>
+      )}
+
+      {isLoading && (
+        <div className="loading-overlay">
+          <div className="spinner"></div>
         </div>
       )}
     </main>
