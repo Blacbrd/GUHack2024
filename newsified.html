@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Newsified Result</title>
+    <link rel="stylesheet" href="src/newsified.css">
+</head>
+<body>
+    <div class="container">
+        <div class="content">
+            <h1>Newsified Article</h1>
+            <div id="image-container">
+                <img id="newsified-image" alt="Newsified image" />
+            </div>
+            <div id="article-container">
+                <p id="newsified-article"></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Go Back Button -->
+    <div class="container">
+        <button onclick="window.history.back()" class="go-back-button">Go Back</button>
+    </div>
+
+    <script>
+        // Get query parameters
+        const urlParams = new URLSearchParams(window.location.search);
+        const imageUrl = urlParams.get('image');
+        const article = urlParams.get('article');
+
+        // Set the image and article content
+        if (imageUrl) {
+            const img = document.getElementById('newsified-image');
+            img.src = decodeURIComponent(imageUrl);
+            img.onerror = function() {
+                console.error('Error loading image:', imageUrl);
+                this.style.display = 'none';
+            };
+        }
+
+        if (article) {
+            document.getElementById('newsified-article').textContent = decodeURIComponent(article);
+        }
+    </script>
+</body>
+</html>
