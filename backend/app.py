@@ -20,6 +20,7 @@ app = Flask(__name__)
 CORS(app)
 
 # Set up OpenAI API Key
+# NOTE: WILL REMOVE THIS LATER AFTER HACKATHON EVENT!!!
 api_key = "sk-svcacct-cNpEjHaToqE8f1_oq5mtOav-MW58kAAPPnY2lzO3W3FdX1lTM4-B88AF-DU36xuVT3BlbkFJiYStWmktQpsH4HTId447QBQGCh4jmzqdiyzaD-Lk-hudqrQbinAEXD8tlcRAO9kA" 
 
 # Configure file upload
