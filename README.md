@@ -1,7 +1,7 @@
 # Inspiration
 Inspired by the UniCS challenge for PhotoJournalist, and also by the AI Agent Reply challenge. Therefore creating an AI PhotoJournalist
 
-# What it does#
+# What it does
 Takes either user input, or camera input. User selects style of article, then waits for a response. Dynamic CSS changes web layout, and generated text about the image is given. The user can then go back and submit another image
 
 # How we built it
