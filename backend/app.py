@@ -21,7 +21,7 @@ CORS(app)
 
 # Set up OpenAI API Key
 # NOTE: WILL REMOVE THIS LATER AFTER HACKATHON EVENT!!!
-api_key = "sk-svcacct-cNpEjHaToqE8f1_oq5mtOav-MW58kAAPPnY2lzO3W3FdX1lTM4-B88AF-DU36xuVT3BlbkFJiYStWmktQpsH4HTId447QBQGCh4jmzqdiyzaD-Lk-hudqrQbinAEXD8tlcRAO9kA" 
+api_key = "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" 
 
 # Configure file upload
 UPLOAD_FOLDER = os.path.join(os.path.dirname(os.path.abspath(__file__)), "uploads")
